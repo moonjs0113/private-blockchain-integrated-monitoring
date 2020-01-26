@@ -1,0 +1,40 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+networks:
+  blockchain_multi:
+
+services:
+  couchdb0:
+    container_name: couchdb0
+    image: hyperledger/fabric-couchdb:0.4.18
+    # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+    # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+    environment:
+      - COUCHDB_USER=hanium
+      - COUCHDB_PASSWORD=gksdldma
+    # Comment/Uncomment the port mapping if you want to hide/expose the CouchDB service,
+    # for example map it to utilize Fauxton User Interface in dev environments.
+    networks:
+      - blockchain_multi
+    ports:
+      - "5984:5984"
+
+  couchdb1:
+    container_name: couchdb1
+    image: hyperledger/fabric-couchdb:0.4.18
+    # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+    # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    # Comment/Uncomment the port mapping if you want to hide/expose the CouchDB service,
+    # for example map it to utilize Fauxton User Interface in dev environments.
+    networks:
+      - blockchain_multi
+    ports:
+      - "6984:5984"

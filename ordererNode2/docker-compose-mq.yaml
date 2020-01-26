@@ -1,0 +1,72 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+
+# NOTE: This is not the way a Kafka cluster would normally be deployed in production, as it is not secure
+# and is not fault tolerant. This example is a toy deployment that is only meant to exercise the Kafka code path
+# of the ordering service.
+
+version: '2'
+
+networks:
+  blockchain_multi:
+
+services:
+  zookeeper1:
+    container_name: zookeeper1
+    image: hyperledger/fabric-zookeeper:0.4.18
+    restart: always
+    ports:
+      - '2181:2181'
+      - '2888:2888'
+      - '3888:3888'
+    environment:
+      - ZOO_MY_ID=2
+      - ZOO_SERVERS=server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+    networks:
+      - blockchain_multi
+    extra_hosts:
+      - "orderer.example.com:172.31.39.23"
+      - "orderer3.examole.com:172.31.38.221"
+      - "zookeeper0:172.31.39.23"
+      - "zookeeper2:172.31.38.221"
+      - "kafka0.example.com:172.31.39.23"
+      - "kafka2.example.com:172.31.38.221"
+      - "kafka3.example.com:172.31.38.221"
+
+  kafka1:
+    container_name: kafka1.example.com
+    image: hyperledger/fabric-kafka:0.4.18
+    restart: always
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+      #- KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka.example.com:9092
+      #- KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_MESSAGE_MAX_BYTES=103809024 # 99 * 1024 * 1024 B
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=103809024 # 99 * 1024 * 1024 B
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+      #- KAFKA_LOG_RETENTION_MS=-1
+      - KAFKA_MIN_INSYNC_REPLICAS=1
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      #- KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://172.31.44.81:9092
+      - KAFKA_ADVERTISED_HOST_NAME=172.31.44.81
+      - KAFKA_ADVERTISED_PORT=9092
+      #- KAFKA_HOST_NAME=kafka0
+    networks:
+      - blockchain_multi
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    extra_hosts:
+      - "orderer.example.com:172.31.39.23"
+      - "orderer3.examole.com:172.31.38.221"
+      - "zookeeper0:172.31.39.23"
+      - "zookeeper2:172.31.38.221"
+      - "kafka0.example.com:172.31.39.23"
+      - "kafka2.example.com:172.31.38.221"
+      - "kafka3.example.com:172.31.38.221"
+      - "ca0.org1.example.com:172.31.39.23"
+      - "ca1.org2.example.com:172.31.39.23"

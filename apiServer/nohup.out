@@ -1,0 +1,49 @@
+
+Removing network artifacts_default
+
+========== No containers available for deletion ==========
+
+
+========== No images available for deletion ===========
+
+Creating network "artifacts_default" with the default driver
+Pulling ca.org1.example.com (hyperledger/fabric-ca:)...
+latest: Pulling from hyperledger/fabric-ca
+Digest: sha256:82a7f653ed0de520bf3ee565a07a76aac8b91ed80869b33dddfec39652c9d183
+Status: Downloaded newer image for hyperledger/fabric-ca:latest
+Pulling orderer.example.com (hyperledger/fabric-orderer:)...
+latest: Pulling from hyperledger/fabric-orderer
+Digest: sha256:efbcd38e7a09066621a16e6da0e35329c02c3491046538cfd1107a96f0c750cf
+Status: Downloaded newer image for hyperledger/fabric-orderer:latest
+Pulling peer0.org1.example.com (hyperledger/fabric-peer:)...
+latest: Pulling from hyperledger/fabric-peer
+Digest: sha256:fc11964a5201fc559bcee573e601753bf6218e35ded2f5259d86bc73cdc38976
+Status: Downloaded newer image for hyperledger/fabric-peer:latest
+Creating orderer.example.com ... 
+Creating ca_peerOrg1         ... 
+Creating ca_peerOrg2         ... 
+[3A[2KCreating orderer.example.com ... [32mdone[0m[3BCreating peer0.org2.example.com ... 
+Creating peer1.org2.example.com ... 
+Creating peer0.org1.example.com ... 
+Creating peer1.org1.example.com ... 
+[5A[2KCreating ca_peerOrg2            ... [32mdone[0m[5B[6A[2KCreating ca_peerOrg1            ... [32mdone[0m[6B[3A[2KCreating peer1.org2.example.com ... [32mdone[0m[3B[2A[2KCreating peer0.org1.example.com ... [32mdone[0m[2B[1A[2KCreating peer1.org1.example.com ... [32mdone[0m[1B[4A[2KCreating peer0.org2.example.com ... [32mdone[0m[4B
+
+============== node modules installed already =============
+
+[32m[2019-11-10 16:54:42.282] [INFO] SampleWebApp - [39m****************** SERVER STARTED ************************
+[32m[2019-11-10 16:54:42.284] [INFO] SampleWebApp - [39m***************  http://localhost:4000  ******************
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::4000
+    at Object._errnoException (util.js:992:11)
+    at _exceptionWithHostPort (util.js:1014:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1355:14)
+    at listenInCluster (net.js:1396:12)
+    at Server.listen (net.js:1480:7)
+    at Object.<anonymous> (/home/jangwonpyo0/fabric-samples/balance-transfer/app.js:93:37)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
